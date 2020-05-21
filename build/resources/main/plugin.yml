@@ -1,0 +1,118 @@
+name: UndeadCore
+main: me.zhdg.undeadcore.Main
+author: [ZombieHDGaming]
+
+version: 1.1X
+description: UndeadCore Plugin
+depend: [ProtocolLib, Vault]
+
+load: POSTWORLD
+
+commands:
+  staffchat:
+    description: Message the Staff
+    permission: uc.staffchat
+  sc:
+    description: Message the Staff
+    permission: uc.staffchat
+  msg:
+    description: Send a PM to another Player
+    permission: uc.message
+    aliases: [pm, message, whisper, tell]
+  r:
+    description: Reply to a PM
+    permission: uc.message
+    aliases: [reply]
+  msgtoggle:
+    description: Toggle Private Messaging
+    permission: uc.togglemsg
+  spy:
+    description: Spy on Private Messages
+    permission: uc.spy
+  invsee:
+    description: Check a Player's Inventory
+    permission: uc.invsee
+  gm:
+    description: Gamemode
+    permission: uc.gamemode
+    aliases: [gamemode]
+  maintenance:
+    description: Maintenance Mode
+    permission: uc.maintenance
+    aliases: [mm]
+  fly:
+    description: Fly Mode
+    permission: uc.fly
+    aliases: [f]
+  nick:
+    description: Nickname
+    permission: uc.nickname
+    aliases: [nickname]
+permissions:
+    uc.*:
+        description: Gives access to all commands for UndeadCore
+        children:
+            uc.limitbypass: true
+            uc.elytraupgrade: true
+            uc.colorchat: true
+            uc.staffchat: true
+            uc.message: true
+            uc.togglemessage: true
+            uc.spy: true
+            uc.gamemode: true
+            uc.maintenance: true
+            uc.entermaintenance: true
+            uc.fly: true
+            uc.safelogin: true
+            uc.vanishedmessage: true
+            uc.tabcomplete: true
+            uc.colorsign: true
+            uc.nickname: true
+    uc.limitbypass:
+        description: Ability to join Full Server
+        default: op
+    uc.elytraupgrade:
+        description: Ability to use Upgraded Elytra
+        default: op
+    uc.colorchat:
+        description: Ability to use Color in Chat
+        default: op
+    uc.staffchat:
+        description: Ability to use /staffchat
+        default: op
+    uc.message:
+        description: Ability to use /msg
+        default: op
+    uc.togglemessage:
+        description: Ability to use /msgtoggle
+        default: op
+    uc.spy:
+        description: Ability to use /spy
+        default: op
+    uc.gamemode:
+        description: Ability to use /gm
+        default: op
+    uc.maintenance:
+        description: Ability to use /Maintenance
+        default: op
+    uc.entermaintenance:
+        description: Ability to Enter during Maintenance
+        default: op
+    uc.fly:
+        description: Ability to Fly
+        default: op
+    uc.safelogin:
+        description: Ability to Fly on Join
+        default: op
+    uc.vanishedmessage:
+        description: Ability to Private Message Players while Vanished
+        default: op
+    uc.tabcomplete:
+        description: Ability to use tab in commands. Block most ways to view server plugins.
+        default: op
+    uc.colorsign:
+        description: Ability to use color signs on signs.
+        default: op
+    uc.nickname:
+        description: Ability to nickname
+        default: op

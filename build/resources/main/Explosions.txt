@@ -1,0 +1,14 @@
+	@EventHandler
+	public void onEntityExplode(EntityExplodeEvent event){
+		for(Block b : event.blockList()) {
+			float x = (float) -3 + (float) (Math.random() * ((3 - -3) + 1));
+			float y = (float) -3 + (float) (Math.random() * ((3 - -3) + 1));
+			float z = (float) -3 + (float) (Math.random() * ((3 - -3) + 1));
+			
+			FallingBlock fallingBlock = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
+			fallingBlock.setDropItem(false);
+			fallingBlock.setVelocity(new Vector(x, y, z));
+			
+			b.setType(Material.AIR);
+		}
+	}

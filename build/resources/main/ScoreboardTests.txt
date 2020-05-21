@@ -1,0 +1,56 @@
+	public static void scoreboardTest(Player player) {
+		final ScoreboardManager manager = Bukkit.getScoreboardManager();
+		final Scoreboard board = manager.getNewScoreboard();
+
+		//    	Objective objective = board.registerNewObjective("showhealth", "health");
+		//    	objective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+		//    	objective.setDisplayName(colorize("&c♥"));
+
+		final Iterator<Team> iterator = board.getTeams().iterator();
+		while (iterator.hasNext()) {
+			iterator.next().unregister();
+		}
+		for (final Player online : Bukkit.getOnlinePlayers()) {
+			loadScoreboardTeam(board, online);
+			loadScoreboardTeam(board, player);
+		}
+		player.setScoreboard(board);
+
+	}	
+
+	private static void loadScoreboardTeam(final Scoreboard scoreboard, final Player p) {
+		final String group = EcoHandler.chat.getPrimaryGroup(p);
+		final String id = "ac" + Ranks.tabPriority(p) + group + String.valueOf(p.getEntityId());
+		Team team = scoreboard.getTeam(id);
+		if (team == null) {
+			team = scoreboard.registerNewTeam(id);
+			if (!group.equalsIgnoreCase("")) {
+				team.setPrefix(colorize(Ranks.prefix(p)));
+			}
+			team.addPlayer((OfflinePlayer)p);
+			team.setOption(Option.COLLISION_RULE, OptionStatus.NEVER);
+		}
+	}
+	
+	if (cmd.getName().equalsIgnoreCase("acreload")) {
+			if (sender instanceof Player) {
+				Player player = (Player)sender;
+				final String user = EcoHandler.chat.getPlayerPrefix(player) + player.getDisplayName() + EcoHandler.chat.getPlayerSuffix(player);
+				if (!sender.hasPermission("ac.reload")) {
+					sender.sendMessage(Main.colorize("&7&l[&3&lAC&7&l]&r &cYou do not have permission to execute this command."));
+					return false;
+				}
+				for(Player online : Bukkit.getOnlinePlayers()) {
+					Main.scoreboardTest(online);
+					if(online != player) {
+						if(EcoHandler.chat.getPrimaryGroup(online).equals("admin")) {
+							online.spigot().sendMessage(ChatMessageType.ACTION_BAR, (BaseComponent)new TextComponent(Main.colorize("&e&l[&f&l!&e&l]&r " + user + " &ainitiated a Core Reload.")));
+							online.playSound(online.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
+						}
+					}
+				}
+				Main.scoreboardTest(player);
+				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, (BaseComponent)new TextComponent(Main.colorize("&e&l[&f&l!&e&l]&r &aReload Complete.")));
+				player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
+			}
+		}

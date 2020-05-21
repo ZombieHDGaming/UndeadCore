@@ -1,0 +1,56 @@
+configurations {
+    jarLibs
+}
+
+apply plugin: 'java'
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url "https://jitpack.io"
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven { url "https://repo.dmulloy2.net/nexus/repository/public/" }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly "org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT"
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.5.0";
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+    compileOnly "com.destroystokyo.paper:paper-api:1.15.2-R0.1-SNAPSHOT"
+    jarLibs group: "org.magicwerk", name: "brownies-collections", version: "0.9.14"
+    jarLibs 'com.github.JavaFactoryDev:LightningStorage:3.0.9'
+    configurations.compile.extendsFrom(configurations.jarLibs)
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+jar {
+    from {
+        configurations.jarLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

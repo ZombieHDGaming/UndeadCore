@@ -1,0 +1,32 @@
+package me.ZHDG.Commands;
+
+import me.ZHDG.Main;
+
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class GUICommand implements CommandExecutor {
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String command, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("workbench")) {
+			if (sender instanceof Player) {
+				Player player = (Player)sender;
+				if (!sender.hasPermission("ac.workbench")) {
+					sender.sendMessage(Main.colorize("&7&l[&3&lAC&7&l] &cYou do not have permission to execute this command."));
+					return false;
+				}
+				if(args.length == 0) {
+//					show(player);
+					player.openWorkbench((Location)null, true);
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+}
